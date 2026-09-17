@@ -1,4 +1,0 @@
-# Hashes of file build rules.
-fc4e6b439750c0a412149554b8d234f7 plugin/CMakeFiles/Distortion_vst3_helper
-b8b87476955d2446f56ebd00bac497c2 plugin/Distortion_artefacts/JuceLibraryCode/Distortion_AU/PkgInfo
-b839119fd733b5ef40690616e0da2d84 plugin/Distortion_artefacts/JuceLibraryCode/Distortion_VST3/PkgInfo
