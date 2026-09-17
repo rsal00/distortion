@@ -1,0 +1,3 @@
+/Users/rubensalazar/Programming/AUDIO/distortion/build/vst3_helpers/Distortion/CMakeFiles/vst3_helper.dir
+/Users/rubensalazar/Programming/AUDIO/distortion/build/vst3_helpers/Distortion/CMakeFiles/edit_cache.dir
+/Users/rubensalazar/Programming/AUDIO/distortion/build/vst3_helpers/Distortion/CMakeFiles/rebuild_cache.dir
