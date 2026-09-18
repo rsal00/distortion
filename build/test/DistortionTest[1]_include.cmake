@@ -1,5 +1,0 @@
-if(EXISTS "/Users/rubensalazar/Programming/AUDIO/distortion/build/test/DistortionTest[1]_tests.cmake")
-  include("/Users/rubensalazar/Programming/AUDIO/distortion/build/test/DistortionTest[1]_tests.cmake")
-else()
-  add_test(DistortionTest_NOT_BUILT DistortionTest_NOT_BUILT)
-endif()
