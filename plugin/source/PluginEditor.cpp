@@ -7,13 +7,15 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
 {
     juce::ignoreUnused (processorRef);
 
+    vis.setNumChannels(processorRef.getNumInputChannels());
+
     background.setImage(bg_img);
     drive_lb.setImage(drive_lb_img);
     tone_lb.setImage(tone_lb_img);
     output_lb.setImage(output_lb_img);
 
     // Drive slider
-    drive_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    drive_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     drive_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
     drive_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
     drive_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
@@ -21,7 +23,7 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     drive_sl.setPopupDisplayEnabled(true, false, this);
 
     // Tone slider
-    tone_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    tone_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     tone_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
     tone_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
     tone_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
@@ -29,7 +31,7 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     tone_sl.setPopupDisplayEnabled(true, false, this);
 
     // Output slider
-    output_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    output_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     output_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
     output_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
     output_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
@@ -39,10 +41,9 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     // Bypass button
     bypass_btn.setColour(juce::ToggleButton::tickColourId, juce::Colour(255, 255, 255));
 
-
-
     addAndMakeVisible(background);
     addAndMakeVisible(bypass_btn);
+    addAndMakeVisible(vis);
 
     // Make sliders visible
     addAndMakeVisible(drive_sl);
@@ -79,6 +80,8 @@ void DistortionAudioProcessorEditor::resized()
     // subcomponents in your editor..
     const auto bounds = getLocalBounds();
     background.setBounds(bounds);
+
+    vis.setBounds({0, 0, 270, 210});
 
     bypass_btn.setBounds({500, 200, 120, 90});
 

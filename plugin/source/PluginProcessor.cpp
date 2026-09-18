@@ -1,6 +1,7 @@
 #include "afdistort/PluginProcessor.h"
 #include "afdistort/PluginEditor.h"
 #include "juce_dsp/juce_dsp.h"
+#include <cmath>
 
 //==============================================================================
 DistortionAudioProcessor::DistortionAudioProcessor()
@@ -146,11 +147,25 @@ void DistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+    float disAmount = 10.0f;
+    float disSignal;
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
         juce::ignoreUnused (channelData);
         // ..do something to the data...
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            disSignal = channelData[sample] * disAmount;
+
+            if (disSignal < -1)
+                disSignal = -1.0f;
+            else if (disSignal > 1)
+                disSignal = 1.0f;
+            
+            channelData[sample] = disSignal;
+            
+        }
     }
 }
 
