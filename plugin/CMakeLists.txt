@@ -18,6 +18,9 @@ juce_add_binary_data(DistortionAssets
     NAMESPACE assets
     SOURCES
         ../assets/background.png
+        ../assets/drive-lb.PNG
+        ../assets/tone-lb.PNG
+        ../assets/output-lb.PNG
 )
 
 target_sources(${PROJECT_NAME}
@@ -44,8 +47,9 @@ target_link_libraries(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         DistortionAssets
-        # juce::juce_gui_basics
-        # juce::juce_audio_processors
+        juce::juce_gui_basics
+        juce::juce_audio_processors
+        juce::juce_dsp
 )
 
 target_compile_definitions(${PROJECT_NAME}

@@ -8,12 +8,54 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     juce::ignoreUnused (processorRef);
 
     background.setImage(bg_img);
-    background.setImagePlacement(juce::RectanglePlacement::fillDestination);
-    
+    drive_lb.setImage(drive_lb_img);
+    tone_lb.setImage(tone_lb_img);
+    output_lb.setImage(output_lb_img);
+
+    // Drive slider
+    drive_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    drive_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
+    drive_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
+    drive_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
+    drive_sl.setColour(juce::Slider::thumbColourId, juce::Colour(224, 0, 0));
+    drive_sl.setPopupDisplayEnabled(true, false, this);
+
+    // Tone slider
+    tone_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    tone_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
+    tone_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
+    tone_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
+    tone_sl.setColour(juce::Slider::thumbColourId, juce::Colour(224, 0, 0));
+    tone_sl.setPopupDisplayEnabled(true, false, this);
+
+    // Output slider
+    output_sl.setSliderStyle(juce::Slider::SliderStyle::Rotary);
+    output_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
+    output_sl.setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(92, 22, 22));
+    output_sl.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(224, 0, 0));
+    output_sl.setColour(juce::Slider::thumbColourId, juce::Colour(224, 0, 0));
+    output_sl.setPopupDisplayEnabled(true, false, this);
+
+    // Bypass button
+    bypass_btn.setColour(juce::ToggleButton::tickColourId, juce::Colour(255, 255, 255));
+
+
+
     addAndMakeVisible(background);
+    addAndMakeVisible(bypass_btn);
+
+    // Make sliders visible
+    addAndMakeVisible(drive_sl);
+    addAndMakeVisible(tone_sl);
+    addAndMakeVisible(output_sl);
+
+    // Make label images visible
+    addAndMakeVisible(drive_lb);
+    addAndMakeVisible(tone_lb);
+    addAndMakeVisible(output_lb);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (570, 240);
+    setSize(540, 270);
 }
 
 DistortionAudioProcessorEditor::~DistortionAudioProcessorEditor()
@@ -37,4 +79,14 @@ void DistortionAudioProcessorEditor::resized()
     // subcomponents in your editor..
     const auto bounds = getLocalBounds();
     background.setBounds(bounds);
+
+    bypass_btn.setBounds({500, 200, 120, 90});
+
+    drive_sl.setBounds({getWidth() / 2, 5, 120, 90});
+    tone_sl.setBounds({getWidth() - 130, 5, 120, 90});
+    output_sl.setBounds({getWidth() - 200, getHeight() - 130, 120, 90});
+
+    drive_lb.setBounds({getWidth() / 2 + 10, 90, 100, 25});
+    tone_lb.setBounds({getWidth() - 120, 90, 100, 25});
+    output_lb.setBounds({getWidth() - 190, getHeight() - 45, 100, 25});
 }

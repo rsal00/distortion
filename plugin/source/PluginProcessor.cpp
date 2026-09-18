@@ -1,5 +1,6 @@
 #include "afdistort/PluginProcessor.h"
 #include "afdistort/PluginEditor.h"
+#include "juce_dsp/juce_dsp.h"
 
 //==============================================================================
 DistortionAudioProcessor::DistortionAudioProcessor()
