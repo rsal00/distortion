@@ -9,8 +9,15 @@ juce_add_plugin(${PROJECT_NAME}
     NEEDS_MIDI_OUTPUT FALSE
     PLUGIN_MANUFACTURER_CODE AMFW
     PLUGIN_CODE AFDS
-    FORMATS AU VST3 STANDALONE
+    FORMATS AU VST3 Standalone
     PRODUCT_NAME "AFDistort"
+    COPY_PLUGIN_AFTER_BUILD TRUE
+)
+
+juce_add_binary_data(DistortionAssets
+    NAMESPACE assets
+    SOURCES
+        ../assets/background.png
 )
 
 target_sources(${PROJECT_NAME}
@@ -22,6 +29,7 @@ target_sources(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         include
+        # ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_artefacts/JuceLibraryCode
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -31,6 +39,13 @@ target_link_libraries(${PROJECT_NAME}
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
+)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        DistortionAssets
+        # juce::juce_gui_basics
+        # juce::juce_audio_processors
 )
 
 target_compile_definitions(${PROJECT_NAME}
