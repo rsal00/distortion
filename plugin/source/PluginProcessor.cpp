@@ -12,8 +12,10 @@ DistortionAudioProcessor::DistortionAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), signalView{1}
 {
+    signalView.setRepaintRate(30);
+    signalView.setBufferSize(256);
 }
 
 DistortionAudioProcessor::~DistortionAudioProcessor()
@@ -167,6 +169,7 @@ void DistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
             
         }
     }
+    signalView.pushBuffer(buffer);
 }
 
 //==============================================================================

@@ -7,8 +7,6 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
 {
     juce::ignoreUnused (processorRef);
 
-    vis.setNumChannels(processorRef.getNumInputChannels());
-
     background.setImage(bg_img);
     drive_lb.setImage(drive_lb_img);
     tone_lb.setImage(tone_lb_img);
@@ -41,9 +39,12 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     // Bypass button
     bypass_btn.setColour(juce::ToggleButton::tickColourId, juce::Colour(255, 255, 255));
 
+    // Visualizer
+    processorRef.signalView.setColours(juce::Colour(153, 0, 0), juce::Colour(92, 22, 22));
+
     addAndMakeVisible(background);
     addAndMakeVisible(bypass_btn);
-    addAndMakeVisible(vis);
+    addAndMakeVisible(processorRef.signalView);
 
     // Make sliders visible
     addAndMakeVisible(drive_sl);
@@ -81,7 +82,7 @@ void DistortionAudioProcessorEditor::resized()
     const auto bounds = getLocalBounds();
     background.setBounds(bounds);
 
-    vis.setBounds({0, 0, 270, 210});
+    processorRef.signalView.setBounds({0, 0, 270, 210});
 
     bypass_btn.setBounds({500, 200, 120, 90});
 

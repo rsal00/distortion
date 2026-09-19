@@ -2,7 +2,6 @@
 
 #include "PluginProcessor.h"
 #include "BinaryData.h"
-#include <juce_audio_utils/juce_audio_utils.h>
 
 //==============================================================================
 class DistortionAudioProcessorEditor final : public juce::AudioProcessorEditor
@@ -48,8 +47,6 @@ private:
     juce::Slider tone_sl;
     juce::Slider output_sl;
     juce::ToggleButton bypass_btn;
-
-    juce::AudioVisualiserComponent vis{0};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DistortionAudioProcessorEditor)
 };
