@@ -21,12 +21,8 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     drive_sl.setPopupDisplayEnabled(true, false, this);
     drive_sl.setRange(0.0, 30.0, 0.5);
     drive_sl.setName("Drive level");
-    drive_sl.textFromValueFunction = [](double value)
-    {
-        return juce::String(value, 1) + " dB";
-    };
+    drive_sl.setTextValueSuffix(" dB");
     
-
     // Tone slider
     tone_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     tone_sl.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
@@ -36,10 +32,7 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     tone_sl.setPopupDisplayEnabled(true, false, this);
     tone_sl.setRange(20.0, 20000.0, 2);
     tone_sl.setName("Tone level");
-    tone_sl.textFromValueFunction = [](double value)
-    {
-        return juce::String(value, 1) + " Hz";
-    };
+    tone_sl.setTextValueSuffix(" Hz");
 
     // Output slider
     output_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -49,11 +42,9 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     output_sl.setColour(juce::Slider::thumbColourId, juce::Colour(224, 0, 0));
     output_sl.setPopupDisplayEnabled(true, false, this);
     output_sl.setRange(-20.0, 20.0, 0.5);
+    output_sl.setValue(-2.0);
     output_sl.setName("Output level");
-    output_sl.textFromValueFunction = [](double value)
-    {
-        return juce::String(value, 1) + " dB";
-    };
+    output_sl.setTextValueSuffix(" dB");
 
     // Bypass button
     bypass_btn.setColour(juce::ToggleButton::tickColourId, juce::Colour(255, 255, 255));
