@@ -158,7 +158,7 @@ void DistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         // ..do something to the data...
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            disSignal = channelData[sample] * disAmount;
+            disSignal = (channelData[sample] * disAmount) + 0.5;
 
             if (disSignal < -1)
                 disSignal = -1.0f;
