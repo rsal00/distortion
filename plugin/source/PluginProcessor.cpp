@@ -12,10 +12,22 @@ DistortionAudioProcessor::DistortionAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), signalView{1}
+                       ), 
+                       signalView{1}, 
+                       parameters(*this, nullptr, juce::Identifier("APVTSTutorial"), 
+                        {
+                            std::make_unique<juce::AudioParameterFloat> ("drive",
+                                "Drive",
+                                0.0f,
+                                30.0f,
+                                0.0f
+                            )
+                        })
 {
     signalView.setRepaintRate(30);
     signalView.setBufferSize(256);
+
+    driveParameter = parameters.getRawParameterValue("drive");
 }
 
 DistortionAudioProcessor::~DistortionAudioProcessor()
@@ -149,7 +161,7 @@ void DistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    float disAmount = 10.0f;
+    float driveAmnt = *driveParameter;
     float disSignal;
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
@@ -158,7 +170,7 @@ void DistortionAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         // ..do something to the data...
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            disSignal = (channelData[sample] * disAmount) + 0.5;
+            disSignal = (channelData[sample] * driveAmnt) + 0.5;
 
             if (disSignal < -1)
                 disSignal = -1.0f;
@@ -180,7 +192,7 @@ bool DistortionAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* DistortionAudioProcessor::createEditor()
 {
-    return new DistortionAudioProcessorEditor (*this);
+    return new DistortionAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
@@ -190,6 +202,9 @@ void DistortionAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     juce::ignoreUnused (destData);
+    auto state = parameters.copyState();
+    std::unique_ptr<juce::XmlElement> xml{state.createXml()};
+    copyXmlToBinary(*xml, destData);
 }
 
 void DistortionAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -197,6 +212,10 @@ void DistortionAudioProcessor::setStateInformation (const void* data, int sizeIn
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     juce::ignoreUnused (data, sizeInBytes);
+    std::unique_ptr<juce::XmlElement> xmlState{getXmlFromBinary(data, sizeInBytes)};
+    if (xmlState.get() != nullptr)
+        if (xmlState->hasTagName(parameters.state.getType()))
+            parameters.replaceState(juce::ValueTree::fromXml(*xmlState));
 }
 
 //==============================================================================

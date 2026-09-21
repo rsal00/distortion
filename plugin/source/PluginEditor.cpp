@@ -2,8 +2,8 @@
 #include "afdistort/PluginEditor.h"
 
 //==============================================================================
-DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p)
+DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), processorRef (p), valueTreeState(vts)
 {
     juce::ignoreUnused (processorRef);
 
@@ -22,6 +22,8 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     drive_sl.setRange(0.0, 30.0, 0.5);
     drive_sl.setName("Drive level");
     drive_sl.setTextValueSuffix(" dB");
+
+    driveAttachment.reset(new SliderAttachment{valueTreeState, "drive", drive_sl});
     
     // Tone slider
     tone_sl.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -65,6 +67,7 @@ DistortionAudioProcessorEditor::DistortionAudioProcessorEditor (DistortionAudioP
     addAndMakeVisible(drive_lb);
     addAndMakeVisible(tone_lb);
     addAndMakeVisible(output_lb);
+
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize(540, 270);

@@ -46,6 +46,9 @@ public:
     juce::AudioVisualiserComponent signalView;
 
 private:
+    juce::AudioProcessorValueTreeState parameters;
+    float prevDrive;
+    std::atomic<float>* driveParameter = nullptr;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DistortionAudioProcessor)
 };

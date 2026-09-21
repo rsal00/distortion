@@ -3,11 +3,13 @@
 #include "PluginProcessor.h"
 #include "BinaryData.h"
 
+typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
+
 //==============================================================================
 class DistortionAudioProcessorEditor final : public juce::AudioProcessorEditor
 {
 public:
-    explicit DistortionAudioProcessorEditor (DistortionAudioProcessor&);
+    explicit DistortionAudioProcessorEditor (DistortionAudioProcessor&, juce::AudioProcessorValueTreeState& vts);
     ~DistortionAudioProcessorEditor() override;
 
     //==============================================================================
@@ -47,6 +49,9 @@ private:
     juce::Slider tone_sl;
     juce::Slider output_sl;
     juce::ToggleButton bypass_btn;
+
+    std::unique_ptr<SliderAttachment> driveAttachment;
+    juce::AudioProcessorValueTreeState& valueTreeState;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DistortionAudioProcessorEditor)
 };
